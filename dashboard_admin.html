@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="adminHMD professional admin dashboard template" />
+  <title>Dashboard Admin</title>
+
+  <link rel="stylesheet" href="Template/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="Template/assets/vendors/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="Template/assets/css/style.css" />
+</head>
+
+<body>
+  <div class="admin-shell">
+    <div class="sidebar-backdrop" data-sidebar-close></div>
+
+    <div class="admin-main">
+      <nav class="navbar admin-navbar navbar-expand bg-white">
+        <div class="container-fluid px-3 px-lg-4">
+          <!-- Brand Logo -->
+          <div class="navbar-brand-wrapper d-flex align-items-center">
+            <img src="Template/assets/images/jpeg/logo_PeTIK.png" alt="logo" class="navbar-brand me-2"
+              style="width: 10%" />
+            <h5 class="fw-bold mb-0">PeTIKHub</h5>
+          </div>
+
+          <!-- Actions & Profile -->
+          <div class="navbar-actions ms-auto">
+            <div class="dropdown">
+                <button
+                  class="icon-button"
+                  type="submit"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  aria-label="Notifications"
+                >
+                  <i class="fa-solid fa-circle text-danger position-absolute d-none" id="notif-dot" style="font-size: 8px; top: 8px; right: 10px;"></i>
+                  <i class="bi bi-bell"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end notification-menu" id="notification">
+
+                </div>
+              </div>
+
+            <div class="dropdown">
+              <button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <span class="profile-name d-none d-sm-inline" id="pengguna">Admin Hasan</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button class="btn btn-danger dropdown-item text-danger" type="button" onclick="logout()">
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="dashboard-content">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+          <div class="page-heading">
+            <div class="page-heading-copy">
+              <span class="page-icon"><i class="bi bi-person-workspace" aria-hidden="true"></i></span>
+              <div>
+                <h1 class="h3 mb-1">Dashboard Admin</h1>
+                <p class="text-muted mb-0">
+                  Pantau dan kelola seluruh pengajuan pengadaan
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metric Cards -->
+          <section class="row g-3 mt-1" aria-label="Dashboard metrics">
+            <div class="col-12 col-sm-6 col-xl-4">
+              <article class="metric-card metric-warning">
+                <div class="metric-top">
+                  <span class="metric-label">PENGAJUAN MASUK</span>
+                  <span class="metric-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>
+                </div>
+                <div class="metric-value" id="count-masuk">0</div>
+              </article>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+              <article class="metric-card metric-primary">
+                <div class="metric-top">
+                  <span class="metric-label">SEDANG DI PROSES</span>
+                  <span class="metric-icon"><i class="bi bi-hourglass-split" aria-hidden="true"></i></span>
+                </div>
+                <div class="metric-value" id="count-diproses">0</div>
+              </article>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4">
+              <article class="metric-card metric-success">
+                <div class="metric-top">
+                  <span class="metric-label">TOTAL SELESAI</span>
+                  <span class="metric-icon"><i class="bi bi-check-circle-fill" aria-hidden="true"></i></span>
+                </div>
+                <div class="metric-value" id="count-selesai">0</div>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel mt-3">
+            <div class="panel-header">
+              <div>
+                <h2 class="h5 mb-1 section-title">
+                  <i class="bi bi-table" aria-hidden="true"></i><span>Data Pengajuan</span>
+                </h2>
+              </div>
+              <div class="search-box-wrapper">
+                <i class="bi bi-search search-icon"></i>
+                <input type="search" class="form-control search-input-custom" placeholder="Cari pengajuan"
+                  id="search" />
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col">NO</th>
+                    <th scope="col">PEMOHON</th>
+                    <th scope="col">TANGGAL</th>
+                    <th scope="col">BARANG</th>
+                    <th scope="col">QTY</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">AKSI</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Modal Detail Pengajuan -->
+          <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-bold" style="font-size: 1.2rem">
+                    Detail Pengajuan
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                  <div class="list-group list-group-flush shadow-sm rounded border">
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                      <span class="text-secondary fw-bold">Pemohon</span>
+                      <span id="detailPemohon" class="fw-bold text-dark"></span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                      <span class="text-secondary fw-bold">Tanggal</span>
+                      <span id="detailTanggal" class="text-dark"></span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                      <span class="text-secondary fw-bold">Barang</span>
+                      <span id="detailBarang" class="fw-bold text-dark"></span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                      <span class="text-secondary fw-bold">Jumlah</span>
+                      <span id="detailJumlah" class="text-dark"></span>
+                    </div>
+
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                      <span class="text-secondary fw-bold">Status</span>
+                      <span id="detailStatus" class="badge"></span>
+                    </div>
+
+                    <div class="list-group-item py-3">
+                      <span class="text-secondary fw-bold d-block mb-1">Keterangan</span>
+                      <p id="detailKeterangan" class="mb-0 text-dark small"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end: modal detail -->
+
+          <!-- modal edit -->
+          <div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-bold" style="font-size: 1.2rem">
+                    Edit Pengajuan
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                  <form id="formEdit">
+                    <input type="hidden" id="editIndex">
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Nama Pemohon</label>
+                      <input type="text" class="form-control" id="editPemohon" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Tanggal Pengajuan</label>
+                      <input type="date" class="form-control" id="editTanggal">
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Nama Barang</label>
+                      <input type="text" class="form-control" id="editBarang" required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Jumlah Barang</label>
+                      <input type="number" class="form-control" id="editJumlah" required>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Status</label>
+                      <select name="status" id="status" class="form-control">
+                        <option value="" disabled selected>Pending</option>
+                        <option value="diproses">Diproses</option>
+                        <option value="disetujui">Disetujui</option>
+                        <option value="ditolak">Ditolak</option>
+                      </select>
+
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Keterangan</label>
+                      <textarea class="form-control" id="editKeterangan" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Catatan</label>
+                      <textarea class="form-control" id="editCatatan" rows="3"></textarea>
+                    </div>
+
+                    <div class="text-end">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                      <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end: modal edit -->
+
+        </div>
+      </main>
+
+      <hr />
+      <footer class="admin-footer">
+          <hr />
+          <div class="container-fluid px-3 px-lg-4">
+            <span
+              ><br />
+              Developed by
+              <p class="fw-bold text-success" href="https://t.me/+vGGWje0_0b82NDFl">CodeBreakers</p>
+            </span>
+          </div>
+        </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="Template/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="Template/assets/js/main.js"></script>
+  <script src="admin.js"></script>
+</body>
+
+</html>

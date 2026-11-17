@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="id" data-theme="light" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="adminHMD professional admin dashboard template"
+    />
+    <title>Form Pengadaan Barang</title>
+
+    <link rel="stylesheet" href="Template/assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="Template/assets/vendors/bootstrap-icons/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="Template/assets/css/style.css" />
+  </head>
+
+  <body>
+    <div class="admin-main">
+      <nav class="navbar admin-navbar navbar-expand bg-white">
+        <div class="container-fluid px-3 px-lg-4">
+          <div class="navbar-brand-wrapper d-flex align-items-center">
+            <img
+              src="Template/assets/images/jpeg/logo_PeTIK.png"
+              alt="logo"
+              class="navbar-brand me-2"
+              style="width: 10%"
+            />
+            <h5 class="fw-bold mb-0">PeTIKHub</h5>
+          </div>
+
+          <div class="navbar-actions ms-auto d-flex align-items-center gap-2">
+            <a href="dashboard_user.html">
+              <button class="btn btn-outline-warning" type="button">
+                <i class="bi bi-arrow-bar-left" aria-hidden="true"></i>
+                Kembali
+              </button>
+            </a>
+
+            <div class="dropdown">
+              <button
+                class="icon-button"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Notifications"
+              >
+                <span class="notification-dot"></span>
+                <i class="bi bi-bell" aria-hidden="true"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end notification-menu">
+                <div class="dropdown-header fw-bold text-body">
+                  Notifications
+                </div>
+                <a class="dropdown-item">
+                  <span class="notification-title">New user registered</span>
+                  <span class="notification-time">4 minutes ago</span>
+                </a>
+                <a class="dropdown-item">
+                  <span class="notification-title">Revenue target reached</span>
+                  <span class="notification-time">32 minutes ago</span>
+                </a>
+                <a class="dropdown-item">
+                  <span class="notification-title"
+                    >Security review completed</span
+                  >
+                  <span class="notification-time">1 hour ago</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button
+                class="profile-button dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span class="profile-name d-none d-sm-inline" id="pengguna"
+                  >User</span
+                >
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button
+                    class="btn btn-danger dropdown-item text-danger"
+                    type="button"
+                    onclick="logout()"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="dashboard-content">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+          <section class="row justify-content-center g-4">
+            <div class="col-12 col-lg-8 col-xl-6">
+              <form
+                id="formPengadaan"
+                class="panel needs-validation"
+                novalidate
+              >
+                <div class="panel-header">
+                  <div>
+                    <h2 class="h5 mb-1 section-title">
+                      <i class="bi bi-box-seam" aria-hidden="true"></i>
+                      <span>Form Pengadaan Barang</span>
+                    </h2>
+                  </div>
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label" for="formNama"
+                      >Nama Pemohon</label
+                    >
+                    <input
+                      class="form-control"
+                      id="formNama"
+                      type="text"
+                      readonly
+                      required
+                    />
+                    <small
+                      id="pemohonError"
+                      class="text-danger d-block"
+                    ></small>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label class="form-label" for="formBarang"
+                      >Nama Barang</label
+                    >
+                    <input
+                      class="form-control"
+                      id="formBarang"
+                      type="text"
+                      required
+                    />
+                    <small id="barangError" class="text-danger d-block"></small>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label class="form-label" for="formJumlah"
+                      >Jumlah Barang</label
+                    >
+                    <input
+                      class="form-control"
+                      id="formJumlah"
+                      type="number"
+                      min="1"
+                      step="1"
+                      required
+                    />
+                    <small id="jumlahError" class="text-danger d-block"></small>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label class="form-label" for="formTanggal"
+                      >Tanggal Pengajuan</label
+                    >
+                    <input
+                      class="form-control"
+                      id="formTanggal"
+                      type="date"
+                      required
+                    />
+                    <small
+                      id="tanggalError"
+                      class="text-danger d-block"
+                    ></small>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label class="form-label" for="formAlasan"
+                      >Keterangan</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="formAlasan"
+                      rows="3"
+                      required
+                    ></textarea>
+                    <small id="alasanError" class="text-danger d-block"></small>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                  <div>
+                    <button class="btn btn-outline-danger" type="reset">
+                      <i
+                        class="bi bi-arrow-counterclockwise"
+                        aria-hidden="true"
+                      ></i>
+                      Reset
+                    </button>
+                  </div>
+                  <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-send" aria-hidden="true"></i>
+                    Ajukan Pengadaan
+                  </button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="admin-footer">
+        <hr />
+        <div class="container-fluid px-3 px-lg-4 text-center">
+          <span>
+            Developed by <br />
+            <a
+              target="_blank"
+              class="fw-bold text-success text-decoration-none"
+              href="https://t.me/+vGGWje0_0b82NDFl"
+            >
+              CodeBreakers
+            </a>
+          </span>
+        </div>
+      </footer>
+    </div>
+
+    <script src="Template/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="form.js"></script>
+  </body>
+</html>
