@@ -19,18 +19,13 @@ if (
   window.location.replace("login.html");
 }
 
-function logout(event) {
-  // Mencegah konflik event bawaan dropdown
-  if (event) event.preventDefault(); 
-  
-  localStorage.removeItem("pengguna_login");
-  localStorage.removeItem("peTIK_loggedUser");
+function logout() {
+localStorage.removeItem("pengguna_login");
+localStorage.removeItem("peTIK_loggedUser");
 
-  // Beri jeda kecil agar animasi dropdown selesai dan tidak error
-  setTimeout(() => {
-    window.location.replace("login.html");
-  }, 100);
+window.location.replace("index.html");
 }
+
 // Untuk memperbarui statistik pengadaan
 function updateStatistik() {
   const totalMasuk = daftarPengadaan.length;
